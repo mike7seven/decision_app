@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decision and Action Assist</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Decision Assist">
+    <meta name="description" content="Navigate decisions with clarity and action using proven psychological techniques">
+    <meta name="theme-color" content="#667eea">
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTciIGhlaWdodD0iNTciIHZpZXdCb3g9IjAgMCA1NyA1NyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjU3IiBoZWlnaHQ9IjU3IiByeD0iMTIiIGZpbGw9InVybCgjZ3JhZGllbnQwX2xpbmVhcl8xXzEpIi8+CjxwYXRoIGQ9Ik0yOC41IDE5VjM4IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTkgMjguNUgzOCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQwX2xpbmVhcl8xXzEiIHgxPSIwIiB5MT0iMCIgeDI9IjU3IiB5Mj0iNTciIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzY2N0VFQSIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NjRCQTIiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K">
+    <link rel="apple-touch-icon" sizes="60x60" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiByeD0iMTIiIGZpbGw9InVybCgjZ3JhZGllbnQwX2xpbmVhcl8xXzEpIi8+CjxwYXRoIGQ9Ik0zMCAyMFYzOSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBhdGggZD0iTTIwIDMwSDQwIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudDBfbGluZWFyXzFfMSIgeDE9IjAiIHkxPSIwIiB4Mj0iNjAiIHkyPSI2MCIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUVBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
+    <link rel="apple-touch-icon" sizes="72x72" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzIiIGhlaWdodD0iNzIiIHZpZXdCb3g9IjAgMCA3MiA3MiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjcyIiBoZWlnaHQ9IjcyIiByeD0iMTQiIGZpbGw9InVybCgjZ3JhZGllbnQwX2xpbmVhcl8xXzEpIi8+CjxwYXRoIGQ9Ik0zNiAyNFY0NyIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBhdGggZD0iTTI0IDM2SDQ4IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudDBfbGluZWFyXzFfMSIgeDE9IjAiIHkxPSIwIiB4Mj0iNzIiIHkyPSI3MiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUVBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
+    <link rel="apple-touch-icon" sizes="114x114" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTE0IiBoZWlnaHQ9IjExNCIgdmlld0JveD0iMCAwIDExNCAxMTQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMTQiIGhlaWdodD0iMTE0IiByeD0iMjAiIGZpbGw9InVybCgjZ3JhZGllbnQwX2xpbmVhcl8xXzEpIi8+CjxwYXRoIGQ9Ik01NyAzOFY3NSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBhdGggZD0iTTM4IDU3SDc2IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudDBfbGluZWFyXzFfMSIgeDE9IjAiIHkxPSIwIiB4Mj0iMTE0IiB5Mj0iMTE0IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxzdG9wIHN0b3AtY29sb3I9IiM2NjdFRUEiLz4KPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzY0QkEyIi8+CjwvbGluZWFyR3JhZGllbnQ+CjwvZGVmcz4KPHN2Zz4K">
+    <link rel="apple-touch-icon" sizes="144x144" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQ0IiBoZWlnaHQ9IjE0NCIgdmlld0JveD0iMCAwIDE0NCAxNDQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNDQiIGhlaWdodD0iMTQ0IiByeD0iMjQiIGZpbGw9InVybCgjZ3JhZGllbnQwX2xpbmVhcl8xXzEpIi8+CjxwYXRoIGQ9Ik03MiA0OFY5NSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSI1IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBhdGggZD0iTTQ4IDcySDk2IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudDBfbGluZWFyXzFfMSIgeDE9IjAiIHkxPSIwIiB4Mj0iMTQ0IiB5Mj0iMTQ0IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxzdG9wIHN0b3AtY29sb3I9IiM2NjdFRUEiLz4KPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzY0QkEyIi8+CjwvbGluZWFyR3JhZGllbnQ+CjwvZGVmcz4KPHN2Zz4K">
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkRlY2lzaW9uIGFuZCBBY3Rpb24gQXNzaXN0IiwKICAic2hvcnRfbmFtZSI6ICJEZWNpc2lvbiBBc3Npc3QiLAogICJkZXNjcmlwdGlvbiI6ICJOYXZpZ2F0ZSBkZWNpc2lvbnMgd2l0aCBjbGFyaXR5IGFuZCBhY3Rpb24gdXNpbmcgcHJvdmVuIHBzeWNob2xvZ2ljYWwgdGVjaG5pcXVlcyIsCiAgInN0YXJ0X3VybCI6ICIvIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjZmZmZmZmIiwKICAidGhlbWVfY29sb3IiOiAiIzY2N2VlYSIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjNhV1IwYUQwaU1UZzBJaUJvWldsbmFIUTlJakU0TkNJZ2RtbGxkMEp2ZUQwaU1DQXdJREU0TkNBeE9EUWlJR1pwYkd3OUltNXZibVVpSUhodGJHNXpQU0pvZEhSd09pOHZkM2QzTG5jekxtOXlaeTh5TURBd0wzTjJaeUkrQ2p4eVpXTjBJSGRwWkhSb1BTSXhPRFFpSUdobGFXZG9kRDBpTVRnMElpQnllRDBpTWpRaUlHWnBiR3c5SW5WeWJDZ2paM0poWkdsbGJuUXdYMnhwYm1WaGNsOHhYekVwSWk4K0NqeHdZWFJvSUdROUlrMDVNaUEwT0ZZNUlISTJiQ0FnSUNJZ2MzUnliMnRsUFNKM2FHbDBaU0lnYzNSeWIydGxMWGRwWkhSb1BTSTFJaUJ6ZEhKdmEyVXRiR2x1WldOaGNEMGljbTkxYm1RaUx6NEtQSEJoZEdnZ1pEMGlUVFE0SURreVNEa3pJaUJ6ZEhKdmEyVTlJbmRvYVhSbElpQnpkSEp2YTJVdGQybGtkR2c5SURJZ2MzUnliMnRsTFd4cGJtVmpZWEE5SW5KdmRXNWtJaTgrQ2p4a1pXWnpQZ3A4YkdsdVpXRnlSM0poWkdsbGJuUWdhV1E5SW1keVlXUnBaVzUwTUY5c2FXNW5ZWEpmTVY4eElpQjRNVDBpTUNJZ2VURU1JaUIyT1NBZ1ZHTXhaRzlpWjNKaFpHbGxiblJWYm1sMGN6MGlkWE5sY2xOd1lXTmxUMjVWYzJVaVBnbzhjM1J2Y0NCemRHOXdMV052Ykc5eVBTSWpaalkzUldWQklpOCtDbnh6ZEc5d0lHOW1abk5sZEQwaU1TSWdjM1J2Y0MxamIyeHZjajBpSXpjMk5FSkJNaUl2UGdvOEwyeHBibVZoY2tkeVlXUnBaVzUwUGdvOEwyUmxabk0rQ2p3dmMzWm5QZ289IiwKICAgICAgInNpemVzIjogIjE5MngxOTIiLAogICAgICAidHlwZSI6ICJpbWFnZS9zdmcreG1sIgogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUIzYVdSMGFEMGlOVEV5SWlCb1pXbG5hSFE5SURVM01TSWdkbWxsZDBKdmVEMGlNQ0F3SURBMU1USWdOVEV5SWlCbWFXeHNQU0p1YjI1bElpQjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaVBnbzhjbVZqZENCM2FXUjBhRDBpTlRFeUlpQm9aV2xuYUhROUlqVXhNaUlnY25nOUlqTXlJaUJtYVd4c1BTSjFjbXdvSTJkeVlXUnBaVzUwTUY5c2FXNWZZVEJ4TUY5eFZTOU9kQ0JwSWk4K0NqeHdZWFJvSUdROUlrMHlOVGtnTlRoV01qY3lJaUJ6ZEhKdmEyVTlJbmRvYVhSbElpQnpkSEp2YTJVdGQybGtkR2c5SURJZ2MzUnliMnRsTFdGaGNtRTlJbWRsVFRJeVJ6QjFjQlNxUmtpU0FBQUFBQUJKUlU1RXJrSmdnZz09IiwKICAgICAgInNpemVzIjogIjUxMng1MTIiLAogICAgICAidHlwZSI6ICJpbWFnZS9zdmcreG1sIgogICAgfQogIF0KfQ==">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .app-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            min-height: 600px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #4a5568;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            color: #718096;
+            font-size: 1.1em;
+        }
+
+        .step-container {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .step-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-header {
+            color: #4a5568;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .input-group input,
+        .input-group textarea,
+        .input-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .textarea-large {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+
+        .technique-card {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .technique-card h3 {
+            color: #4a5568;
+            margin-bottom: 10px;
+        }
+
+        .technique-card p {
+            color: #718096;
+            line-height: 1.6;
+        }
+
+        .timer-display {
+            text-align: center;
+            font-size: 3em;
+            color: #667eea;
+            font-weight: bold;
+            margin: 30px 0;
+        }
+
+        .timer-controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .coin-flip {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .coin {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border-radius: 50%;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #4a5568;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .coin:hover {
+            transform: scale(1.1);
+        }
+
+        .coin.flipping {
+            animation: flip 1s ease-in-out;
+        }
+
+        @keyframes flip {
+            0% { transform: rotateY(0deg); }
+            50% { transform: rotateY(90deg); }
+            100% { transform: rotateY(0deg); }
+        }
+
+        .llm-response {
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        .values-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .value-item {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .value-item:hover {
+            background: #e2e8f0;
+        }
+
+        .value-item.selected {
+            background: #667eea;
+            color: white;
+            border-color: #4c51bf;
+        }
+
+        .summary-section {
+            background: #f0f9ff;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .summary-section h3 {
+            color: #1e40af;
+            margin-bottom: 15px;
+        }
+
+        .action-plan {
+            background: #ecfdf5;
+            border: 2px solid #10b981;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <h1>🧠 Decision and Action Assist</h1>
+            <p>Navigate decisions with clarity and action</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <!-- Step 1: Initial Decision Input -->
+        <div class="step-container active" id="step1">
+            <div class="step-header">What decision are you facing?</div>
+            <div class="input-group">
+                <label for="decisionInput">Describe your decision or goal:</label>
+                <textarea id="decisionInput" class="textarea-large" placeholder="e.g., Should I change careers? How do I start my creative project? Should I move to a new city?"></textarea>
+            </div>
+            <div class="input-group">
+                <label for="urgencyLevel">How urgent is this decision?</label>
+                <select id="urgencyLevel">
+                    <option value="low">Low - I have weeks/months to decide</option>
+                    <option value="medium">Medium - I need to decide within days/weeks</option>
+                    <option value="high">High - I need to decide soon (within days)</option>
+                </select>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="nextStep()">Start Analysis</button>
+            </div>
+        </div>
+
+        <!-- Step 2: Technique Selection -->
+        <div class="step-container" id="step2">
+            <div class="step-header">Choose Your Approach</div>
+            <p style="text-align: center; margin-bottom: 30px; color: #718096;">Based on your input, here are the most effective techniques:</p>
+            
+            <div class="technique-card" onclick="selectTechnique('timeboxing')">
+                <h3>⏰ Time-Boxing Analysis</h3>
+                <p>Set strict time limits for your decision-making process to prevent endless analysis.</p>
+            </div>
+            
+            <div class="technique-card" onclick="selectTechnique('twopaths')">
+                <h3>🛤️ Two-Path Decision</h3>
+                <p>Narrow down to just two options and use intuitive decision-making.</p>
+            </div>
+            
+            <div class="technique-card" onclick="selectTechnique('goodenough')">
+                <h3>✅ Good Enough Framework</h3>
+                <p>Define minimum viable standards and move forward at 70% completion.</p>
+            </div>
+            
+            <div class="technique-card" onclick="selectTechnique('values')">
+                <h3>💎 Values-Based Prioritization</h3>
+                <p>Filter your decision through your core values for clear direction.</p>
+            </div>
+        </div>
+
+        <!-- Step 3: Time-Boxing Technique -->
+        <div class="step-container" id="timeboxing">
+            <div class="step-header">Time-Boxing Your Decision</div>
+            <div class="input-group">
+                <label for="timeLimit">Set your analysis time limit:</label>
+                <select id="timeLimit">
+                    <option value="5">5 minutes (Quick decisions)</option>
+                    <option value="15">15 minutes (Standard decisions)</option>
+                    <option value="30">30 minutes (Complex decisions)</option>
+                    <option value="60">1 hour (Major decisions)</option>
+                </select>
+            </div>
+            
+            <div class="timer-display" id="timerDisplay">Ready to start</div>
+            
+            <div class="timer-controls">
+                <button class="btn btn-primary" onclick="startTimer()">Start Timer</button>
+                <button class="btn btn-secondary" onclick="pauseTimer()">Pause</button>
+                <button class="btn btn-secondary" onclick="resetTimer()">Reset</button>
+            </div>
+            
+            <div class="input-group">
+                <label for="timedThoughts">Use this time to write your thoughts:</label>
+                <textarea id="timedThoughts" class="textarea-large" placeholder="What are your options? What are the key factors? What feels right?"></textarea>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="goBack()">Back</button>
+                <button class="btn btn-primary" onclick="completeTimebox()">Complete Analysis</button>
+            </div>
+        </div>
+
+        <!-- Step 4: Two-Paths Technique -->
+        <div class="step-container" id="twopaths">
+            <div class="step-header">Two-Path Decision Making</div>
+            <div class="input-group">
+                <label for="option1">Option 1:</label>
+                <input type="text" id="option1" placeholder="Describe your first main option">
+            </div>
+            <div class="input-group">
+                <label for="option1pros">Option 1 - Key Benefits:</label>
+                <textarea id="option1pros" placeholder="What are the main advantages of this choice?"></textarea>
+            </div>
+            <div class="input-group">
+                <label for="option2">Option 2:</label>
+                <input type="text" id="option2" placeholder="Describe your second main option">
+            </div>
+            <div class="input-group">
+                <label for="option2pros">Option 2 - Key Benefits:</label>
+                <textarea id="option2pros" placeholder="What are the main advantages of this choice?"></textarea>
+            </div>
+            
+            <div class="coin-flip">
+                <h3>Ready for the coin flip test?</h3>
+                <p>Click the coin. Your gut reaction to the result often reveals your true preference.</p>
+                <div class="coin" id="coin" onclick="flipCoin()">FLIP</div>
+                <div id="coinResult"></div>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="goBack()">Back</button>
+                <button class="btn btn-primary" onclick="completeTwoPaths()">Make Decision</button>
+            </div>
+        </div>
+
+        <!-- Step 5: Good Enough Framework -->
+        <div class="step-container" id="goodenough">
+            <div class="step-header">Good Enough Framework</div>
+            <div class="input-group">
+                <label for="perfectVision">Your perfect outcome (100%):</label>
+                <textarea id="perfectVision" class="textarea-large" placeholder="Describe what the ideal result would look like"></textarea>
+            </div>
+            <div class="input-group">
+                <label for="goodEnoughVision">Good enough outcome (70%):</label>
+                <textarea id="goodEnoughVision" class="textarea-large" placeholder="What would be acceptable to move forward with?"></textarea>
+            </div>
+            <div class="input-group">
+                <label for="currentState">Where are you now?</label>
+                <select id="currentState">
+                    <option value="0">Just starting (0-20%)</option>
+                    <option value="30">Some progress (30-50%)</option>
+                    <option value="60">Significant progress (60-70%)</option>
+                    <option value="80">Almost there (80%+)</option>
+                </select>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="goBack()">Back</button>
+                <button class="btn btn-primary" onclick="completeGoodEnough()">Create Action Plan</button>
+            </div>
+        </div>
+
+        <!-- Step 6: Values-Based Decision -->
+        <div class="step-container" id="values">
+            <div class="step-header">Values-Based Prioritization</div>
+            <p style="text-align: center; margin-bottom: 20px;">Select your top 3 core values:</p>
+            
+            <div class="values-list">
+                <div class="value-item" onclick="toggleValue(this, 'authenticity')">Authenticity</div>
+                <div class="value-item" onclick="toggleValue(this, 'creativity')">Creativity</div>
+                <div class="value-item" onclick="toggleValue(this, 'growth')">Personal Growth</div>
+                <div class="value-item" onclick="toggleValue(this, 'impact')">Making an Impact</div>
+                <div class="value-item" onclick="toggleValue(this, 'freedom')">Freedom</div>
+                <div class="value-item" onclick="toggleValue(this, 'connection')">Deep Connections</div>
+                <div class="value-item" onclick="toggleValue(this, 'harmony')">Harmony</div>
+                <div class="value-item" onclick="toggleValue(this, 'purpose')">Sense of Purpose</div>
+                <div class="value-item" onclick="toggleValue(this, 'learning')">Continuous Learning</div>
+                <div class="value-item" onclick="toggleValue(this, 'helping')">Helping Others</div>
+            </div>
+            
+            <div class="input-group">
+                <label for="valuesAnalysis">How does each option align with your selected values?</label>
+                <textarea id="valuesAnalysis" class="textarea-large" placeholder="Analyze each option against your core values..."></textarea>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="goBack()">Back</button>
+                <button class="btn btn-primary" onclick="completeValues()">Get Recommendation</button>
+            </div>
+        </div>
+
+        <!-- Final Step: Action Plan -->
+        <div class="step-container" id="finalPlan">
+            <div class="step-header">Your Personalized Action Plan</div>
+            <div class="action-plan" id="actionPlanContent">
+                <!-- Generated content will go here -->
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="startOver()">New Decision</button>
+                <button class="btn btn-primary" onclick="saveProgress()">Save Progress</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let selectedTechnique = '';
+        let selectedValues = [];
+        let timerInterval;
+        let timeRemaining = 0;
+        let userDecision = '';
+        let coinResult = '';
+
+        function updateProgress() {
+            const totalSteps = 6;
+            const progress = (currentStep / totalSteps) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function nextStep() {
+            const decisionInput = document.getElementById('decisionInput').value.trim();
+            if (!decisionInput) {
+                alert('Please describe your decision first.');
+                return;
+            }
+            userDecision = decisionInput;
+            showStep(2);
+        }
+
+        function showStep(stepNumber) {
+            document.querySelectorAll('.step-container').forEach(container => {
+                container.classList.remove('active');
+            });
+            
+            if (stepNumber === 2) {
+                document.getElementById('step2').classList.add('active');
+            } else if (typeof stepNumber === 'string') {
+                document.getElementById(stepNumber).classList.add('active');
+            } else {
+                document.getElementById('step' + stepNumber).classList.add('active');
+            }
+            
+            currentStep = stepNumber;
+            updateProgress();
+        }
+
+        function selectTechnique(technique) {
+            selectedTechnique = technique;
+            showStep(technique);
+        }
+
+        function goBack() {
+            showStep(2);
+        }
+
+        // Timer functions
+        function startTimer() {
+            const minutes = parseInt(document.getElementById('timeLimit').value);
+            timeRemaining = minutes * 60;
+            updateTimerDisplay();
+            
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                updateTimerDisplay();
+                
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    alert('Time\'s up! Make your decision based on what you\'ve analyzed.');
+                    document.getElementById('timerDisplay').style.color = '#e53e3e';
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            const minutes = parseInt(document.getElementById('timeLimit').value);
+            timeRemaining = minutes * 60;
+            updateTimerDisplay();
+            document.getElementById('timerDisplay').style.color = '#667eea';
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            document.getElementById('timerDisplay').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function completeTimebox() {
+            const thoughts = document.getElementById('timedThoughts').value.trim();
+            if (!thoughts) {
+                alert('Please write down your thoughts during the timed analysis.');
+                return;
+            }
+            clearInterval(timerInterval);
+            generateActionPlan('timebox', { thoughts });
+        }
+
+        // Coin flip function
+        function flipCoin() {
+            const coin = document.getElementById('coin');
+            coin.classList.add('flipping');
+            
+            setTimeout(() => {
+                const isHeads = Math.random() < 0.5;
+                const option1 = document.getElementById('option1').value || 'Option 1';
+                const option2 = document.getElementById('option2').value || 'Option 2';
+                
+                coinResult = isHeads ? option1 : option2;
+                coin.textContent = isHeads ? 'HEADS' : 'TAILS';
+                
+                document.getElementById('coinResult').innerHTML = 
+                    `<h4>Result: ${coinResult}</h4><p>How did that feel? Relieved or disappointed? That's your answer.</p>`;
+                
+                coin.classList.remove('flipping');
+            }, 1000);
+        }
+
+        function completeTwoPaths() {
+            const option1 = document.getElementById('option1').value.trim();
+            const option2 = document.getElementById('option2').value.trim();
+            
+            if (!option1 || !option2) {
+                alert('Please fill in both options.');
+                return;
+            }
+            
+            generateActionPlan('twopaths', { option1, option2, coinResult });
+        }
+
+        function completeGoodEnough() {
+            const perfectVision = document.getElementById('perfectVision').value.trim();
+            const goodEnoughVision = document.getElementById('goodEnoughVision').value.trim();
+            const currentState = document.getElementById('currentState').value;
+            
+            if (!perfectVision || !goodEnoughVision) {
+                alert('Please describe both your perfect and good enough outcomes.');
+                return;
+            }
+            
+            generateActionPlan('goodenough', { perfectVision, goodEnoughVision, currentState });
+        }
+
+        function toggleValue(element, value) {
+            if (selectedValues.includes(value)) {
+                selectedValues = selectedValues.filter(v => v !== value);
+                element.classList.remove('selected');
+            } else if (selectedValues.length < 3) {
+                selectedValues.push(value);
+                element.classList.add('selected');
+            } else {
+                alert('Please select only 3 core values.');
+            }
+        }
+
+        function completeValues() {
+            if (selectedValues.length !== 3) {
+                alert('Please select exactly 3 core values.');
+                return;
+            }
+            
+            const analysis = document.getElementById('valuesAnalysis').value.trim();
+            if (!analysis) {
+                alert('Please analyze how your options align with your values.');
+                return;
+            }
+            
+            generateActionPlan('values', { selectedValues, analysis });
+        }
+
+        function generateActionPlan(technique, data) {
+            let content = `
+                <div class="summary-section">
+                    <h3>📋 Your Decision Summary</h3>
+                    <p><strong>Decision:</strong> ${userDecision}</p>
+                    <p><strong>Technique Used:</strong> ${getTechniqueName(technique)}</p>
+                </div>
+            `;
+
+            switch(technique) {
+                case 'timebox':
+                    content += `
+                        <div class="summary-section">
+                            <h3>⏰ Time-Boxed Analysis Results</h3>
+                            <p><strong>Your Thoughts:</strong></p>
+                            <p>${data.thoughts}</p>
+                            <h4>Next Steps:</h4>
+                            <p>• Set a clear deadline for your final decision</p>
+                            <p>• Take action on your strongest insight from the timed analysis</p>
+                            <p>• Remember: Perfect information isn't required for good decisions</p>
+                        </div>
+                    `;
+                    break;
+                
+                case 'twopaths':
+                    content += `
+                        <div class="summary-section">
+                            <h3>🛤️ Two-Path Analysis Results</h3>
+                            <p><strong>Option 1:</strong> ${data.option1}</p>
+                            <p><strong>Option 2:</strong> ${data.option2}</p>
+                            ${data.coinResult ? `<p><strong>Coin Result:</strong> ${data.coinResult}</p>` : ''}
+                            <h4>Recommended Action:</h4>
+                            <p>Trust your gut reaction to the coin flip. If you felt relieved or excited by the result, that's likely your preference. If you felt disappointed, consider the other option.</p>
+                        </div>
+                    `;
+                    break;
+                
+                case 'goodenough':
+                    const currentPercent = parseInt(data.currentState);
+                    const readyToAct = currentPercent >= 60;
+                    
+                    content += `
+                        <div class="summary-section">
+                            <h3>✅ Good Enough Framework Results</h3>
+                            <p><strong>Perfect Vision:</strong> ${data.perfectVision}</p>
+                            <p><strong>Good Enough Standard:</strong> ${data.goodEnoughVision}</p>
+                            <p><strong>Current Progress:</strong> ${data.currentState}%</p>
+                            
+                            <h4>${readyToAct ? '🟢 Ready to Act!' : '🟡 Keep Building'}</h4>
+                            ${readyToAct ? 
+                                '<p>You\'ve reached the "good enough" threshold. It\'s time to move forward and refine as you go.</p>' :
+                                '<p>Focus on reaching 70% completion, then take action. You can perfect it through iteration.</p>'
+                            }
+                        </div>
+                    `;
+                    break;
+                
+                case 'values':
+                    content += `
+                        <div class="summary-section">
+                            <h3>💎 Values-Based Analysis Results</h3>
+                            <p><strong>Your Core Values:</strong> ${data.selectedValues.join(', ')}</p>
+                            <p><strong>Your Analysis:</strong></p>
+                            <p>${data.analysis}</p>
+                            <h4>Values-Aligned Action:</h4>
+                            <p>Choose the option that best honors your core values. This alignment will give you confidence and sustainable motivation.</p>
+                        </div>
+                    `;
+                    break;
+            }
+
+            content += `
+                <div class="action-plan">
+                    <h3>🎯 Your Action Protocol</h3>
+                    <p><strong>Immediate Next Step (within 24 hours):</strong><br>
+                    Take one small, concrete action toward your decision. This breaks the analysis paralysis cycle.</p>
+                    
+                    <p><strong>This Week:</strong><br>
+                    • Schedule 30 minutes to plan your approach<br>
+                    • Set a firm decision deadline<br>
+                    • Identify one person to share your progress with</p>
+                    
+                    <p><strong>Remember:</strong><br>
+                    Your perfectionism is a strength when balanced with action. Trust your intuition—it's usually right, and you can course-correct as you go.</p>
+                </div>
+            `;
+
+            document.getElementById('actionPlanContent').innerHTML = content;
+            showStep('finalPlan');
+        }
+
+        function getTechniqueName(technique) {
+            const names = {
+                'timebox': 'Time-Boxing Analysis',
+                'twopaths': 'Two-Path Decision Making',
+                'goodenough': 'Good Enough Framework',
+                'values': 'Values-Based Prioritization'
+            };
+            return names[technique] || technique;
+        }
+
+        function startOver() {
+            currentStep = 1;
+            selectedTechnique = '';
+            selectedValues = [];
+            userDecision = '';
+            coinResult = '';
+            clearInterval(timerInterval);
+            
+            // Reset all form fields
+            document.querySelectorAll('input, textarea, select').forEach(field => {
+                field.value = '';
+            });
+            
+            // Reset selected values
+            document.querySelectorAll('.value-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            showStep(1);
+        }
+
+        function saveProgress() {
+            const progressData = {
+                decision: userDecision,
+                technique: selectedTechnique,
+                timestamp: new Date().toISOString(),
+                actionPlan: document.getElementById('actionPlanContent').innerHTML
+            };
+            
+            // In a real app, this would save to a database
+            const blob = new Blob([JSON.stringify(progressData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Decision_Plan_${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            alert('Your decision plan has been saved!');
+        }
+
+        // Initialize
+        updateProgress();
+    </script>
+</body>
+</html>
